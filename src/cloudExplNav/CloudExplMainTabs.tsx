@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
   },
   cloudExplTabBarBg: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: '#5E93D4',
+    backgroundColor: 'rgb(55, 106, 153)',
   },
   cloudExplTabBarTopBorder: {
     height: 1.5,

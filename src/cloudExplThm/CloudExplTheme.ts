@@ -1,8 +1,8 @@
 import {Platform} from 'react-native';
 
 export const cloudExplColors = {
-  onboardingGradientTop: '#7FAEDB',
-  onboardingGradientBottom: '#4F84C8',
+  onboardingGradientTop: 'rgb(94, 172, 244)',
+  onboardingGradientBottom: 'rgb(15, 54, 90)',
   onboardingHeroFrame: '#5C8EC8',
   onboardingIconBg: '#5E93D4',
   onboardingTitle: '#EAF4FF',

@@ -43,11 +43,6 @@ export function CloudExplBackgroundLayout({
 
   return (
     <View style={styles.cloudExplRoot}>
-      <Image
-        source={background}
-        style={styles.cloudExplBackgroundImage}
-        resizeMode="cover"
-      />
       {scroll ? (
         <ScrollView
           keyboardShouldPersistTaps="handled"

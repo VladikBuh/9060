@@ -1,96 +1,83 @@
-import React, {useEffect, useMemo, useRef} from 'react';
-import {Animated, StyleSheet, View} from 'react-native';
+import React, {useEffect, useRef} from 'react';
+import {Animated, Easing, StyleSheet, View} from 'react-native';
 
 type CloudExplLoaderProps = {
   cloudExplColor?: string;
-  cloudExplDotSize?: number;
-  cloudExplGap?: number;
+  cloudExplWidth?: number;
+  cloudExplHeight?: number;
+  cloudExplTrackColor?: string;
 };
 
 export function CloudExplLoader({
-  cloudExplColor = 'rgb(0, 113, 128)',
-  cloudExplDotSize = 20,
-  cloudExplGap = 6,
+  cloudExplColor = '#0071e2',
+  cloudExplWidth = 130,
+  cloudExplHeight = 4,
+  cloudExplTrackColor = 'rgba(0, 0, 0, 0.2)',
 }: CloudExplLoaderProps) {
-  const cloudExplOpacityA = useRef(new Animated.Value(0)).current;
-  const cloudExplOpacityB = useRef(new Animated.Value(0)).current;
-  const cloudExplOpacityC = useRef(new Animated.Value(0)).current;
-
-  const cloudExplDots = useMemo(
-    () => [
-      {cloudExplKey: 'a', cloudExplOpacity: cloudExplOpacityA, cloudExplDelay: 0},
-      {
-        cloudExplKey: 'b',
-        cloudExplOpacity: cloudExplOpacityB,
-        cloudExplDelay: 330,
-      },
-      {
-        cloudExplKey: 'c',
-        cloudExplOpacity: cloudExplOpacityC,
-        cloudExplDelay: 660,
-      },
-    ],
-    [cloudExplOpacityA, cloudExplOpacityB, cloudExplOpacityC],
-  );
+  const cloudExplProgress = useRef(new Animated.Value(0)).current;
+  const cloudExplBorderRadius = Math.min(30, cloudExplHeight / 2);
 
   useEffect(() => {
-    const cloudExplAnimations = cloudExplDots.map(dot =>
-      Animated.loop(
-        Animated.sequence([
-          Animated.timing(dot.cloudExplOpacity, {
-            toValue: 1,
-            duration: 0,
-            delay: dot.cloudExplDelay,
-            useNativeDriver: true,
-          }),
-          Animated.timing(dot.cloudExplOpacity, {
-            toValue: 0,
-            duration: 600,
-            useNativeDriver: true,
-          }),
-          Animated.timing(dot.cloudExplOpacity, {
-            toValue: 1,
-            duration: 400,
-            useNativeDriver: true,
-          }),
-        ]),
-      ),
+    const cloudExplAnimation = Animated.loop(
+      Animated.timing(cloudExplProgress, {
+        toValue: 1,
+        duration: 1000,
+        easing: Easing.inOut(Easing.ease),
+        useNativeDriver: false,
+      }),
     );
 
-    cloudExplAnimations.forEach(anim => anim.start());
+    cloudExplAnimation.start();
 
     return () => {
-      cloudExplAnimations.forEach(anim => anim.stop());
+      cloudExplAnimation.stop();
     };
-  }, [cloudExplDots]);
+  }, [cloudExplProgress]);
+
+  const cloudExplBarWidth = cloudExplProgress.interpolate({
+    inputRange: [0, 0.5, 1],
+    outputRange: [0, cloudExplWidth, 0],
+  });
+
+  const cloudExplBarLeft = cloudExplProgress.interpolate({
+    inputRange: [0, 0.5, 1],
+    outputRange: [0, 0, cloudExplWidth],
+  });
 
   return (
-    <View style={[styles.cloudExplRow, {gap: cloudExplGap}]}>
-      {cloudExplDots.map(dot => (
-        <Animated.View
-          key={dot.cloudExplKey}
-          style={[
-            styles.cloudExplDot,
-            {
-              width: cloudExplDotSize,
-              height: cloudExplDotSize,
-              borderRadius: cloudExplDotSize / 2,
-              backgroundColor: cloudExplColor,
-              opacity: dot.cloudExplOpacity,
-            },
-          ]}
-        />
-      ))}
+    <View
+      style={[
+        styles.cloudExplTrack,
+        {
+          width: cloudExplWidth,
+          height: cloudExplHeight,
+          borderRadius: cloudExplBorderRadius,
+          backgroundColor: cloudExplTrackColor,
+        },
+      ]}>
+      <Animated.View
+        style={[
+          styles.cloudExplBar,
+          {
+            height: cloudExplHeight,
+            borderRadius: cloudExplBorderRadius,
+            backgroundColor: cloudExplColor,
+            width: cloudExplBarWidth,
+            left: cloudExplBarLeft,
+          },
+        ]}
+      />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  cloudExplRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
+  cloudExplTrack: {
+    position: 'relative',
+    overflow: 'hidden',
   },
-  cloudExplDot: {},
+  cloudExplBar: {
+    position: 'absolute',
+    top: 0,
+  },
 });
-

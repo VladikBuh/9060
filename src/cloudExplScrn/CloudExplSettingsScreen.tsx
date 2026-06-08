@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {
   Image,
   Modal,
+  Platform,
   Pressable,
   ScrollView,
   Share,
@@ -167,15 +168,17 @@ export function CloudExplSettingsScreen() {
             <Text style={styles.cloudExplChevron}>›</Text>
           </Pressable>
 
-          <Pressable
-            style={styles.cloudExplRow}
-            onPress={cloudExplHandleShareApp}>
-            <View style={styles.cloudExplRowLeft}>
-              <Text style={styles.cloudExplRowIcon}>⤴︎</Text>
-              <Text style={styles.cloudExplRowLabel}>Share App</Text>
-            </View>
-            <Text style={styles.cloudExplChevron}>›</Text>
-          </Pressable>
+          {Platform.OS === 'ios' && (
+            <Pressable
+              style={styles.cloudExplRow}
+              onPress={cloudExplHandleShareApp}>
+              <View style={styles.cloudExplRowLeft}>
+                <Text style={styles.cloudExplRowIcon}>⤴︎</Text>
+                <Text style={styles.cloudExplRowLabel}>Share App</Text>
+              </View>
+              <Text style={styles.cloudExplChevron}>›</Text>
+            </Pressable>
+          )}
         </View>
 
         <View style={styles.cloudExplHeroWrap} pointerEvents="none">

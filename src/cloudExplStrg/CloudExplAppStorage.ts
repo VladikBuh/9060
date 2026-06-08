@@ -15,6 +15,7 @@ export const cloudExplSaveOnboardingDone = async (done: boolean) => {
 export const cloudExplLoadVibrationEnabled = async (): Promise<boolean> => {
   const raw = await AsyncStorage.getItem(cloudExplVibrationKey);
   if (raw === null) {
+    await cloudExplSaveVibrationEnabled(false);
     return false;
   }
   return raw === 'true';

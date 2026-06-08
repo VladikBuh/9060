@@ -143,10 +143,20 @@ export const cloudExplMapInitialRegion = (() => {
   return {
     latitude: (minLat + maxLat) / 2,
     longitude: (minLng + maxLng) / 2,
-    latitudeDelta: (maxLat - minLat) * 1.35,
-    longitudeDelta: (maxLng - minLng) * 1.35,
+    latitudeDelta: Math.max(20, (maxLat - minLat) * 1.35),
+    longitudeDelta: Math.max(30, (maxLng - minLng) * 1.35),
   };
 })();
+
+export const cloudExplMapAndroidCamera = {
+  center: {
+    latitude: cloudExplMapInitialRegion.latitude,
+    longitude: cloudExplMapInitialRegion.longitude,
+  },
+  pitch: 0,
+  heading: 0,
+  zoom: 2,
+};
 
 export const cloudExplGetMapLocation = (locationId: string) =>
   cloudExplMapLocations.find(item => item.locationId === locationId);

@@ -101,6 +101,7 @@ export function CloudExplMainTabs() {
         component={CloudExplMapScreen}
         options={{
           tabBarIcon: cloudExplMakeTabIcon(cloudExplImages.tabMap),
+          lazy: true,
         }}
       />
       <cloudExplTab.Screen

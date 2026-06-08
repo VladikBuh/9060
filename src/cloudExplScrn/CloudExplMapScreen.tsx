@@ -1,10 +1,9 @@
-import React, {useMemo, useState} from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 import {
   Image,
   Modal,
   Platform,
   Pressable,
-  ScrollView,
   Share,
   StyleSheet,
   Text,
@@ -15,11 +14,14 @@ import LinearGradient from 'react-native-linear-gradient';
 import MapView, {Marker, PROVIDER_GOOGLE} from 'react-native-maps';
 import {
   type CloudExplMapLocation,
+  cloudExplMapAndroidCamera,
   cloudExplMapInitialRegion,
   cloudExplMapLocations,
 } from '../cloudExplData/CloudExplMapLocations';
 import {cloudExplMapStyle} from '../cloudExplThm/CloudExplMapStyle';
 import {cloudExplColors} from '../cloudExplThm/CloudExplTheme';
+import Orientation from 'react-native-orientation-locker';
+import {useFocusEffect} from '@react-navigation/native';
 
 function CloudExplMapMarkerView() {
   return (
@@ -103,11 +105,21 @@ function CloudExplMapLocationModal({
 }
 
 export function CloudExplMapScreen() {
-  const {width} = useWindowDimensions();
+  const {width, height} = useWindowDimensions();
   const [cloudExplSelectedLocation, setCloudExplSelectedLocation] =
     useState<CloudExplMapLocation | null>(null);
 
+  useFocusEffect(
+    useCallback(() => {
+      Orientation.lockToPortrait();
+      return () => {
+        Orientation.unlockAllOrientations();
+      };
+    }, []),
+  );
+
   const cloudExplMapCardWidth = width - 32;
+  const cloudExplMapHeight = Math.max(360, height - 50 - 80 - 72);
 
   return (
     <LinearGradient
@@ -116,50 +128,57 @@ export function CloudExplMapScreen() {
         cloudExplColors.onboardingGradientBottom,
       ]}
       style={styles.cloudExplRoot}>
-      <ScrollView
-        contentContainerStyle={{flexGrow: 1, paddingTop: 50, paddingBottom: 80}}
-        showsVerticalScrollIndicator={false}>
-        <View style={styles.cloudExplHeader}>
-          <Text style={styles.cloudExplHeaderTitle}>Map</Text>
-        </View>
+      <View style={styles.cloudExplHeader}>
+        <Text style={styles.cloudExplHeaderTitle}>Map</Text>
+      </View>
 
-        <View style={[styles.cloudExplMapCard, {width: cloudExplMapCardWidth}]}>
-          <MapView
-            provider={Platform.OS === 'android' ? PROVIDER_GOOGLE : undefined}
-            style={styles.cloudExplMap}
-            initialRegion={cloudExplMapInitialRegion}
-            customMapStyle={cloudExplMapStyle}
-            rotateEnabled={false}
-            pitchEnabled={false}
-            toolbarEnabled={false}
-            showsCompass={false}
-            showsScale={false}
-            showsBuildings={false}
-            showsTraffic={false}
-            showsIndoors={false}
-            showsPointsOfInterest={false}
-            showsMyLocationButton={false}>
-            {cloudExplMapLocations.map(location => (
-              <Marker
-                key={location.locationId}
-                coordinate={{
-                  latitude: location.latitude,
-                  longitude: location.longitude,
-                }}
-                onPress={() => setCloudExplSelectedLocation(location)}
-                tracksViewChanges={false}>
-                <CloudExplMapMarkerView />
-              </Marker>
-            ))}
-          </MapView>
-        </View>
+      <View
+        style={[
+          styles.cloudExplMapCard,
+          {width: cloudExplMapCardWidth, height: cloudExplMapHeight},
+        ]}>
+        <MapView
+          provider={Platform.OS === 'android' ? PROVIDER_GOOGLE : undefined}
+          style={styles.cloudExplMap}
+          {...(Platform.OS === 'android'
+            ? {initialCamera: cloudExplMapAndroidCamera}
+            : {initialRegion: cloudExplMapInitialRegion})}
+          customMapStyle={cloudExplMapStyle}
+          mapPadding={
+            Platform.OS === 'android'
+              ? {top: 24, right: 24, bottom: 24, left: 24}
+              : undefined
+          }
+          rotateEnabled={false}
+          pitchEnabled={false}
+          toolbarEnabled={false}
+          showsCompass={false}
+          showsScale={false}
+          showsBuildings={false}
+          showsTraffic={false}
+          showsIndoors={false}
+          showsMyLocationButton={false}>
+          {cloudExplMapLocations.map(location => (
+            <Marker
+              key={location.locationId}
+              coordinate={{
+                latitude: location.latitude,
+                longitude: location.longitude,
+              }}
+              pinColor={Platform.OS === 'android' ? '#FF4D4D' : undefined}
+              onPress={() => setCloudExplSelectedLocation(location)}
+              tracksViewChanges={false}>
+              {Platform.OS === 'ios' ? <CloudExplMapMarkerView /> : null}
+            </Marker>
+          ))}
+        </MapView>
+      </View>
 
-        <CloudExplMapLocationModal
-          location={cloudExplSelectedLocation}
-          visible={cloudExplSelectedLocation !== null}
-          onClose={() => setCloudExplSelectedLocation(null)}
-        />
-      </ScrollView>
+      <CloudExplMapLocationModal
+        location={cloudExplSelectedLocation}
+        visible={cloudExplSelectedLocation !== null}
+        onClose={() => setCloudExplSelectedLocation(null)}
+      />
     </LinearGradient>
   );
 }
@@ -167,6 +186,8 @@ export function CloudExplMapScreen() {
 const styles = StyleSheet.create({
   cloudExplRoot: {
     flex: 1,
+    paddingTop: 50,
+    paddingBottom: 80,
   },
   cloudExplHeader: {
     paddingHorizontal: 16,
@@ -184,11 +205,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#5E93D4',
     borderRadius: 14,
     overflow: 'hidden',
-    height: '86%',
     marginTop: 8,
   },
   cloudExplMap: {
-    flex: 1,
+    ...StyleSheet.absoluteFillObject,
   },
   cloudExplMarker: {
     width: 28,

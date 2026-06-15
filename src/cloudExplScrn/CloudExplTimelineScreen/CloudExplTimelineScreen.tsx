@@ -8,8 +8,8 @@ import {
   View,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import {cloudExplTimelineEvents} from '../cloudExplData/CloudExplTimelineEvents';
-import {cloudExplColors} from '../cloudExplThm/CloudExplTheme';
+import {cloudExplTimelineEvents} from '../../cloudExplData/CloudExplTimelineEvents';
+import {cloudExplColors} from '../../cloudExplThm/CloudExplTheme';
 
 const cloudExplTabBarInset = 75;
 

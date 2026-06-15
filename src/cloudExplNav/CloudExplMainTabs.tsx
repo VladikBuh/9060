@@ -7,42 +7,71 @@ import {
   View,
   type ViewStyle,
 } from 'react-native';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {cloudExplImages} from '../cloudExplAssts';
-import {CloudExplArticlesScreen} from '../cloudExplScrn/CloudExplArticlesScreen';
-import {CloudExplFavoritesScreen} from '../cloudExplScrn/CloudExplFavoritesScreen';
-import {CloudExplMapScreen} from '../cloudExplScrn/CloudExplMapScreen';
-import {CloudExplQuizScreen} from '../cloudExplScrn/CloudExplQuizScreen';
-import {CloudExplSettingsScreen} from '../cloudExplScrn/CloudExplSettingsScreen';
-import {CloudExplTimelineScreen} from '../cloudExplScrn/CloudExplTimelineScreen';
-import {CloudExplMainTabParamList} from './CloudExplTypes';
+import {CloudExplArticlesScreen} from '../cloudExplScrn/CloudExplArticlesScreen/CloudExplArticlesScreen';
+import {CloudExplFavoritesScreen} from '../cloudExplScrn/CloudExplFavoritesScreen/CloudExplFavoritesScreen';
+import {CloudExplMapScreen} from '../cloudExplScrn/CloudExplMapScreen/CloudExplMapScreen';
+import {CloudExplQuizScreen} from '../cloudExplScrn/CloudExplQuizScreen/CloudExplQuizScreen';
+import {CloudExplSettingsScreen} from '../cloudExplScrn/CloudExplSettingsScreen/CloudExplSettingsScreen';
+import {CloudExplTimelineScreen} from '../cloudExplScrn/CloudExplTimelineScreen/CloudExplTimelineScreen';
+import {useCloudExplNavigation} from './CloudExplNavigationContext';
+import type {CloudExplMainTabParamList} from './CloudExplTypes';
 
-const cloudExplTab = createBottomTabNavigator<CloudExplMainTabParamList>();
+type CloudExplTabConfig = {
+  name: keyof CloudExplMainTabParamList;
+  icon: number;
+  lazy?: boolean;
+  component: React.ComponentType;
+};
 
-const cloudExplMakeTabIcon =
-  (source: number) =>
-  ({focused}: {focused: boolean}) =>
-    (
-      <Image
-        source={source}
-        style={[
-          styles.cloudExplIcon,
-          {
-            tintColor: focused ? '#4B66FF' : 'rgba(234, 244, 255, 0.62)',
-          },
-        ]}
-        resizeMode="contain"
-      />
-    );
+const cloudExplTabs: CloudExplTabConfig[] = [
+  {
+    name: 'Articles',
+    icon: cloudExplImages.tabArticles,
+    component: CloudExplArticlesScreen,
+  },
+  {
+    name: 'Map',
+    icon: cloudExplImages.tabMap,
+    lazy: true,
+    component: CloudExplMapScreen,
+  },
+  {
+    name: 'Quiz',
+    icon: cloudExplImages.tabQuiz,
+    component: CloudExplQuizScreen,
+  },
+  {
+    name: 'Timeline',
+    icon: cloudExplImages.tabTimeline,
+    component: CloudExplTimelineScreen,
+  },
+  {
+    name: 'Favorites',
+    icon: cloudExplImages.tabFavorites,
+    component: CloudExplFavoritesScreen,
+  },
+  {
+    name: 'Settings',
+    icon: cloudExplImages.tabSettings,
+    component: CloudExplSettingsScreen,
+  },
+];
 
-function CloudExplAnimatedTabButton(props: Record<string, unknown>) {
-  const {children, style, onPress, onLongPress, ...rest} = props;
+function CloudExplAnimatedTabButton({
+  onPress,
+  style,
+  children,
+}: {
+  onPress: () => void;
+  style?: ViewStyle;
+  children: React.ReactNode;
+}) {
   const scale = useRef(new Animated.Value(1)).current;
 
   return (
     <Pressable
-      onPress={onPress as () => void}
-      onLongPress={onLongPress as (() => void) | undefined}
+      onPress={onPress}
       onPressIn={() => {
         Animated.spring(scale, {
           toValue: 0.88,
@@ -59,11 +88,10 @@ function CloudExplAnimatedTabButton(props: Record<string, unknown>) {
           bounciness: 8,
         }).start();
       }}
-      style={[style as ViewStyle, styles.cloudExplTabButton]}
-      {...rest}>
+      style={[style, styles.cloudExplTabButton]}>
       <Animated.View
         style={[styles.cloudExplTabButtonInner, {transform: [{scale}]}]}>
-        {children as React.ReactNode}
+        {children}
       </Animated.View>
     </Pressable>
   );
@@ -79,64 +107,68 @@ function CloudExplTabBarBackground() {
 }
 
 export function CloudExplMainTabs() {
+  const {activeTab, mountedTabs, setActiveTab} = useCloudExplNavigation();
+
   return (
-    <cloudExplTab.Navigator
-      initialRouteName="Articles"
-      screenOptions={{
-        headerShown: false,
-        tabBarShowLabel: false,
-        tabBarStyle: styles.cloudExplTabBar,
-        tabBarBackground: CloudExplTabBarBackground,
-        tabBarButton: props => <CloudExplAnimatedTabButton {...props} />,
-      }}>
-      <cloudExplTab.Screen
-        name="Articles"
-        component={CloudExplArticlesScreen}
-        options={{
-          tabBarIcon: cloudExplMakeTabIcon(cloudExplImages.tabArticles),
-        }}
-      />
-      <cloudExplTab.Screen
-        name="Map"
-        component={CloudExplMapScreen}
-        options={{
-          tabBarIcon: cloudExplMakeTabIcon(cloudExplImages.tabMap),
-          lazy: true,
-        }}
-      />
-      <cloudExplTab.Screen
-        name="Quiz"
-        component={CloudExplQuizScreen}
-        options={{
-          tabBarIcon: cloudExplMakeTabIcon(cloudExplImages.tabQuiz),
-        }}
-      />
-      <cloudExplTab.Screen
-        name="Timeline"
-        component={CloudExplTimelineScreen}
-        options={{
-          tabBarIcon: cloudExplMakeTabIcon(cloudExplImages.tabTimeline),
-        }}
-      />
-      <cloudExplTab.Screen
-        name="Favorites"
-        component={CloudExplFavoritesScreen}
-        options={{
-          tabBarIcon: cloudExplMakeTabIcon(cloudExplImages.tabFavorites),
-        }}
-      />
-      <cloudExplTab.Screen
-        name="Settings"
-        component={CloudExplSettingsScreen}
-        options={{
-          tabBarIcon: cloudExplMakeTabIcon(cloudExplImages.tabSettings),
-        }}
-      />
-    </cloudExplTab.Navigator>
+    <View style={styles.cloudExplRoot}>
+      {cloudExplTabs.map(tab => {
+        const shouldMount = !tab.lazy || mountedTabs.has(tab.name);
+        const focused = activeTab === tab.name;
+        const TabComponent = tab.component;
+
+        if (!shouldMount) {
+          return null;
+        }
+
+        return (
+          <View
+            key={tab.name}
+            style={[styles.cloudExplScreen, !focused && styles.cloudExplScreenHidden]}
+            pointerEvents={focused ? 'auto' : 'none'}>
+            <TabComponent />
+          </View>
+        );
+      })}
+
+      <View style={styles.cloudExplTabBar}>
+        <CloudExplTabBarBackground />
+        {cloudExplTabs.map(tab => {
+          const focused = activeTab === tab.name;
+          return (
+            <CloudExplAnimatedTabButton
+              key={tab.name}
+              onPress={() => setActiveTab(tab.name)}
+              style={styles.cloudExplTabButtonSlot}>
+              <Image
+                source={tab.icon}
+                style={[
+                  styles.cloudExplIcon,
+                  {
+                    tintColor: focused
+                      ? '#4B66FF'
+                      : 'rgba(234, 244, 255, 0.62)',
+                  },
+                ]}
+                resizeMode="contain"
+              />
+            </CloudExplAnimatedTabButton>
+          );
+        })}
+      </View>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
+  cloudExplRoot: {
+    flex: 1,
+  },
+  cloudExplScreen: {
+    ...StyleSheet.absoluteFillObject,
+  },
+  cloudExplScreenHidden: {
+    opacity: 0,
+  },
   cloudExplIcon: {
     width: 22,
     height: 22,
@@ -153,6 +185,8 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   cloudExplTabBarBg: {
     ...StyleSheet.absoluteFillObject,
@@ -163,6 +197,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(234, 244, 255, 0.16)',
   },
   cloudExplTabButton: {flex: 1},
+  cloudExplTabButtonSlot: {flex: 1},
   cloudExplTabButtonInner: {
     flex: 1,
     alignItems: 'center',

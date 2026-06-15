@@ -8,22 +8,23 @@ import {
   Text,
   View,
 } from 'react-native';
-import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
-import {useCloudExplArticles} from '../cloudExplCtx/CloudExplArticlesContext';
-import {useCloudExplFavorites} from '../cloudExplCtx/CloudExplFavoritesContext';
-import {cloudExplArticles} from '../cloudExplData/CloudExplArticles';
-import {CloudExplRootStackParamList} from '../cloudExplNav/CloudExplTypes';
-import {cloudExplColors} from '../cloudExplThm/CloudExplTheme';
+import {useCloudExplArticles} from '../../cloudExplCtx/CloudExplArticlesContext';
+import {useCloudExplFavorites} from '../../cloudExplCtx/CloudExplFavoritesContext';
+import {cloudExplArticles} from '../../cloudExplData/CloudExplArticles';
+import {
+  useCloudExplNavigation,
+  useCloudExplStackParams,
+} from '../../cloudExplNav/CloudExplNavigationContext';
+import {cloudExplColors} from '../../cloudExplThm/CloudExplTheme';
 
 export function CloudExplArticleDetailScreen() {
-  const navigation = useNavigation();
+  const {goBack} = useCloudExplNavigation();
   const {markAsRead, isRead} = useCloudExplArticles();
   const {toggleFavorite, isFavorite} = useCloudExplFavorites();
-  const route =
-    useRoute<RouteProp<CloudExplRootStackParamList, 'ArticleDetail'>>();
+  const {articleId} = useCloudExplStackParams('ArticleDetail');
   const article = cloudExplArticles.find(
-    item => item.articleId === route.params.articleId,
+    item => item.articleId === articleId,
   );
 
   const favorite = article ? isFavorite(article.articleId) : false;
@@ -52,7 +53,7 @@ export function CloudExplArticleDetailScreen() {
         <View style={styles.cloudExplHeaderRow}>
           <Pressable
             hitSlop={10}
-            onPress={() => navigation.goBack()}
+            onPress={() => goBack()}
             style={styles.cloudExplHeaderBtn}>
             <Text style={styles.cloudExplHeaderIcon}>←</Text>
           </Pressable>
@@ -136,7 +137,6 @@ const styles = StyleSheet.create({
   cloudExplRoot: {
     flex: 1,
   },
-  cloudExplTopBar: {},
   cloudExplScrollContent: {
     paddingTop: 66,
     paddingBottom: 40,

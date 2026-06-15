@@ -9,10 +9,10 @@ import {
   useWindowDimensions,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import {cloudExplImages} from '../cloudExplAssts';
-import {CloudExplQuizPlayView} from '../cloudExplCpnnts/CloudExplQuizPlayView';
-import {cloudExplQuizRoundSize} from '../cloudExplData/CloudExplQuizData';
-import {cloudExplColors} from '../cloudExplThm/CloudExplTheme';
+import {cloudExplImages} from '../../cloudExplAssts';
+import {CloudExplQuizPlayView} from '../../cloudExplCpnnts/CloudExplQuizPlayView';
+import {cloudExplQuizRoundSize} from '../../cloudExplData/CloudExplQuizData';
+import {cloudExplColors} from '../../cloudExplThm/CloudExplTheme';
 
 type CloudExplQuizScreenPhase = 'intro' | 'playing';
 

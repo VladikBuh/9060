@@ -9,14 +9,14 @@ import {
   View,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import {useNavigation} from '@react-navigation/native';
+import {useCloudExplNavigation} from '../../cloudExplNav/CloudExplNavigationContext';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {cloudExplImages} from '../cloudExplAssts';
+import {cloudExplImages} from '../../cloudExplAssts';
 import {
   type CloudExplQuizQuestion,
   cloudExplShuffleQuizQuestions,
-} from '../cloudExplData/CloudExplQuizData';
-import {cloudExplColors} from '../cloudExplThm/CloudExplTheme';
+} from '../../cloudExplData/CloudExplQuizData';
+import {cloudExplColors} from '../../cloudExplThm/CloudExplTheme';
 
 type CloudExplQuizPhase = 'playing' | 'complete';
 
@@ -66,7 +66,7 @@ function CloudExplLeaveQuizModal({
 }
 
 export function CloudExplQuizDetailScreen() {
-  const navigation = useNavigation();
+  const {goBack} = useCloudExplNavigation();
   const insets = useSafeAreaInsets();
   const [cloudExplQuestions, setCloudExplQuestions] = useState(() =>
     cloudExplShuffleQuizQuestions(),
@@ -255,7 +255,7 @@ export function CloudExplQuizDetailScreen() {
         onStay={() => setCloudExplShowLeaveModal(false)}
         onLeave={() => {
           setCloudExplShowLeaveModal(false);
-          navigation.goBack();
+          goBack();
         }}
       />
     </LinearGradient>

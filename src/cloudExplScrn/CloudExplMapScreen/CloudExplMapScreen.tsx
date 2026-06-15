@@ -17,11 +17,11 @@ import {
   cloudExplMapAndroidCamera,
   cloudExplMapInitialRegion,
   cloudExplMapLocations,
-} from '../cloudExplData/CloudExplMapLocations';
-import {cloudExplMapStyle} from '../cloudExplThm/CloudExplMapStyle';
-import {cloudExplColors} from '../cloudExplThm/CloudExplTheme';
+} from '../../cloudExplData/CloudExplMapLocations';
+import {cloudExplMapStyle} from '../../cloudExplThm/CloudExplMapStyle';
+import {cloudExplColors} from '../../cloudExplThm/CloudExplTheme';
 import Orientation from 'react-native-orientation-locker';
-import {useFocusEffect} from '@react-navigation/native';
+import {useCloudExplTabFocus} from '../../cloudExplNav/CloudExplNavigationContext';
 
 function CloudExplMapMarkerView() {
   return (
@@ -109,12 +109,13 @@ export function CloudExplMapScreen() {
   const [cloudExplSelectedLocation, setCloudExplSelectedLocation] =
     useState<CloudExplMapLocation | null>(null);
 
-  useFocusEffect(
+  useCloudExplTabFocus(
+    'Map',
     useCallback(() => {
       Orientation.lockToPortrait();
-      return () => {
-        Orientation.unlockAllOrientations();
-      };
+    }, []),
+    useCallback(() => {
+      Orientation.unlockAllOrientations();
     }, []),
   );
 
@@ -186,13 +187,11 @@ export function CloudExplMapScreen() {
 const styles = StyleSheet.create({
   cloudExplRoot: {
     flex: 1,
-    paddingTop: 50,
-    paddingBottom: 80,
+    paddingBottom: 70,
   },
   cloudExplHeader: {
     paddingHorizontal: 16,
-    paddingTop: 16,
-    paddingBottom: 8,
+    paddingTop: 50,
   },
   cloudExplHeaderTitle: {
     color: '#EAF4FF',

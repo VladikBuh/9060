@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import {
   Image,
+  Linking,
   Modal,
   Platform,
   Pressable,
   ScrollView,
-  Share,
   StyleSheet,
   Text,
   View,
@@ -13,14 +13,12 @@ import {
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {cloudExplImages} from '../cloudExplAssts';
-import {useCloudExplApp} from '../cloudExplCtx/CloudExplAppContext';
-import {useCloudExplFavorites} from '../cloudExplCtx/CloudExplFavoritesContext';
-import {cloudExplColors} from '../cloudExplThm/CloudExplTheme';
+import {cloudExplImages} from '../../cloudExplAssts';
+import {useCloudExplApp} from '../../cloudExplCtx/CloudExplAppContext';
+import {useCloudExplFavorites} from '../../cloudExplCtx/CloudExplFavoritesContext';
+import {cloudExplColors} from '../../cloudExplThm/CloudExplTheme';
 
 const cloudExplTabBarInset = 75;
-const cloudExplShareMessage =
-  'Explore the history of Arctic airships with Iron Cloud Explorers!';
 
 function CloudExplSettingsToggle({
   value,
@@ -123,7 +121,9 @@ export function CloudExplSettingsScreen() {
   const cloudExplHeroSize = Math.min(width * 0.66, 252);
 
   const cloudExplHandleShareApp = async () => {
-    await Share.share({message: cloudExplShareMessage});
+    Linking.openURL(
+      'https://apps.apple.com/us/app/ironice-cloud-trip/id6780470939',
+    );
   };
 
   const cloudExplHandleClearFavorites = () => {

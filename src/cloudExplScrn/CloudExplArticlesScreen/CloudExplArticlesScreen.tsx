@@ -9,11 +9,11 @@ import {
   View,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import {useCloudExplFavorites} from '../cloudExplCtx/CloudExplFavoritesContext';
-import {useCloudExplArticles} from '../cloudExplCtx/CloudExplArticlesContext';
-import {cloudExplArticles} from '../cloudExplData/CloudExplArticles';
-import {cloudExplNavigateRootScreen} from '../cloudExplNav/CloudExplRootNavigation';
-import {cloudExplColors} from '../cloudExplThm/CloudExplTheme';
+import {useCloudExplFavorites} from '../../cloudExplCtx/CloudExplFavoritesContext';
+import {useCloudExplArticles} from '../../cloudExplCtx/CloudExplArticlesContext';
+import {cloudExplArticles} from '../../cloudExplData/CloudExplArticles';
+import {cloudExplNavigateRootScreen} from '../../cloudExplNav/CloudExplRootNavigation';
+import {cloudExplColors} from '../../cloudExplThm/CloudExplTheme';
 
 export function CloudExplArticlesScreen() {
   const {toggleFavorite, isFavorite} = useCloudExplFavorites();

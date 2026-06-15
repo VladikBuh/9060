@@ -1,24 +1,21 @@
 import React, {useEffect} from 'react';
-import {Image, StyleSheet, Text, View} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
-import {StackNavigationProp} from '@react-navigation/stack';
-import {cloudExplImages} from '../cloudExplAssts';
-import {CloudExplLoader} from '../cloudExplCpnnts/CloudExplLoader';
-import {CloudExplRootStackParamList} from '../cloudExplNav/CloudExplTypes';
+import {Image, StyleSheet, View} from 'react-native';
+import {cloudExplImages} from '../../cloudExplAssts';
+import {CloudExplLoader} from '../../cloudExplCpnnts/CloudExplLoader';
+import {useCloudExplNavigation} from '../../cloudExplNav/CloudExplNavigationContext';
 
 export function CloudExplSplashScreen() {
-  const navigation =
-    useNavigation<StackNavigationProp<CloudExplRootStackParamList>>();
+  const {replaceRootScreen} = useCloudExplNavigation();
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      navigation.replace('Onboarding');
+      replaceRootScreen('Onboarding');
     }, 3000);
 
     return () => {
       clearTimeout(timeout);
     };
-  }, [navigation]);
+  }, [replaceRootScreen]);
 
   return (
     <View style={styles.cloudExplRoot}>

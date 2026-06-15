@@ -17,7 +17,7 @@ export const cloudExplArticles: CloudExplArticle[] = [
 During the nineteenth century, inventors tested different shapes, propulsion systems, and steering mechanisms. Some designs used lightweight engines, while others focused on improving stability in changing weather. Although many prototypes failed, each attempt provided valuable lessons that moved the technology forward. Public interest grew as newspapers reported on these remarkable experiments.
 
 The arrival of the airship marked a turning point in transportation history. For the first time, people could imagine traveling through the sky with purpose rather than chance. These early developments inspired future generations of engineers and explorers. The foundation had been laid for the Golden Age of Airships that would soon follow.`,
-    image: require('../cloudExplAssts/images/BirthOfTheAirship.png'),
+    image: require('../cloudExplAssts/images/iron-cloud-explorer-birth-of-the-airship.png'),
   },
   {
     articleId: 'CountZeppelinsDream',
@@ -29,7 +29,7 @@ The arrival of the airship marked a turning point in transportation history. For
 Zeppelin introduced a revolutionary internal framework made from lightweight metal. This rigid design allowed airships to become much larger while maintaining their shape during flight. Engineers could place multiple gas cells inside the structure, increasing both safety and performance. The concept quickly distinguished Zeppelin airships from earlier designs.
 
 Despite financial difficulties and technical setbacks, Zeppelin continued improving his creations. Public support eventually helped fund new projects, and successful flights attracted international attention. His determination turned a personal dream into a major aviation industry. Today, his name remains one of the most recognized in airship history.`,
-    image: require('../cloudExplAssts/images/CountZeppelinsDream.png'),
+    image: require('../cloudExplAssts/images/iron-cloud-explorer-count-zeppelins-dream.png'),
   },
   {
     articleId: 'CrossingTheAtlantic',
@@ -41,7 +41,7 @@ Despite financial difficulties and technical setbacks, Zeppelin continued improv
 Large passenger airships regularly traveled between Europe and the Americas. These flights featured dining rooms, lounges, sleeping accommodations, and observation windows. Travelers enjoyed a level of comfort rarely found in early aviation. The experience felt more like a floating hotel than a traditional aircraft.
 
 Successful ocean crossings demonstrated the potential of commercial air travel. Newspapers celebrated new records and reported on each arrival with excitement. Airships became symbols of innovation and international connection. For a brief period, they represented the future of global transportation.`,
-    image: require('../cloudExplAssts/images/CrossingTheAtlantic.png'),
+    image: require('../cloudExplAssts/images/iron-cloud-explorer-crossing-the-atlantic.png'),
   },
   {
     articleId: 'AirshipsAboveTheArctic',
@@ -53,7 +53,7 @@ Successful ocean crossings demonstrated the potential of commercial air travel. 
 Explorers used airships to survey glaciers, map coastlines, and observe changing ice conditions. Flights covered areas that were almost impossible to reach by ship or sled. Crews recorded valuable scientific information while capturing extraordinary views of the frozen landscape. Each expedition expanded knowledge of the far north.
 
 The success of these missions demonstrated the versatility of airships. They were no longer viewed only as passenger vehicles but also as tools for discovery. Polar flights inspired public fascination and scientific interest. Their achievements became some of the most celebrated chapters in aviation history.`,
-    image: require('../cloudExplAssts/images/AirshipsAboveTheArctic.png'),
+    image: require('../cloudExplAssts/images/iron-cloud-explorer-airships-above-the-arctic.png'),
   },
   {
     articleId: 'TheNorgeExpedition',
@@ -65,7 +65,7 @@ The success of these missions demonstrated the versatility of airships. They wer
 Led by Roald Amundsen and Umberto Nobile, the expedition departed from Svalbard and headed north. The crew traveled above vast stretches of sea ice and some of the most remote regions on Earth. Careful navigation and favorable weather helped them continue toward their objective. The flight eventually passed over the North Pole itself.
 
 The successful completion of the mission became a landmark achievement in exploration history. It proved that airships could operate effectively in extreme polar conditions. Scientists and explorers gained valuable information from the journey. The Norge expedition remains a symbol of courage, innovation, and international cooperation.`,
-    image: require('../cloudExplAssts/images/TheNorgeExpedition.png'),
+    image: require('../cloudExplAssts/images/iron-cloud-explorer-the-norge-expedition.png'),
   },
   {
     articleId: 'ReachingTheNorthPole',
@@ -77,7 +77,7 @@ The successful completion of the mission became a landmark achievement in explor
 Flying above the ice allowed explorers to bypass many dangers encountered on the ground. Airships could cover enormous distances in a fraction of the time required by traditional expeditions. Crews observed the polar environment from a completely different perspective. Their journeys provided valuable geographic and scientific observations.
 
 Reaching the North Pole by air represented a major achievement in human exploration. These flights demonstrated how technology could overcome natural barriers. The success of polar aviation inspired future research efforts. It also strengthened the reputation of airships as powerful exploration vehicles.`,
-    image: require('../cloudExplAssts/images/ReachingTheNorthPole.png'),
+    image: require('../cloudExplAssts/images/iron-cloud-explorer-reaching-the-north-pole.png'),
   },
   {
     articleId: 'LifeOnBoard',
@@ -89,7 +89,7 @@ Reaching the North Pole by air represented a major achievement in human explorat
 Dining rooms, lounges, and personal mode cabins provided a level of luxury rarely available in aviation at the time. Guests could socialize, read, or simply relax while the airship moved steadily toward its destination. Meals were often prepared by professional staff and served in elegant surroundings. The atmosphere resembled that of an upscale hotel.
 
 Behind the scenes, crew members worked continuously to maintain safe operations. Engineers monitored engines, navigators tracked routes, and specialists managed the airship's gas systems. Their teamwork ensured that each flight proceeded smoothly. Life aboard combined comfort, adventure, and cutting-edge technology.`,
-    image: require('../cloudExplAssts/images/LifeOnBoard.png'),
+    image: require('../cloudExplAssts/images/iron-cloud-explorer-life-on-board.png'),
   },
   {
     articleId: 'AirshipNavigation',
@@ -101,7 +101,7 @@ Behind the scenes, crew members worked continuously to maintain safe operations.
 Navigators frequently used celestial observations to calculate their location. Radio communication provided additional information when available. Weather forecasts also played an essential role because changing conditions could force adjustments to planned routes. Maintaining accuracy required constant attention and experience.
 
 Successful navigation helped make long-distance airship travel possible. It allowed crews to cross oceans, reach polar regions, and connect distant continents. These skills were especially important during exploration missions. The achievements of navigators contributed greatly to the success of the Golden Age of Airships.`,
-    image: require('../cloudExplAssts/images/AirshipNavigation.png'),
+    image: require('../cloudExplAssts/images/iron-cloud-explorer-airship-navigation.png'),
   },
   {
     articleId: 'PolarWeatherChallenges',
@@ -113,7 +113,7 @@ Successful navigation helped make long-distance airship travel possible. It allo
 Airship crews carefully monitored weather patterns before and during flights. Unexpected storms could reduce visibility and make navigation more difficult. Strong winds sometimes pushed airships away from their intended course. Despite these challenges, experienced crews learned how to adapt to changing conditions.
 
 The ability to operate in such environments demonstrated the resilience of airship technology. Successful polar missions provided valuable information about Arctic weather systems. They also highlighted the skill and determination of the people involved. These experiences helped shape future exploration strategies.`,
-    image: require('../cloudExplAssts/images/PolarWeatherChallenges.png'),
+    image: require('../cloudExplAssts/images/iron-cloud-explorer-polar-weather-challenges.png'),
   },
   {
     articleId: 'TheHindenburgDisaster',
@@ -125,7 +125,7 @@ The ability to operate in such environments demonstrated the resilience of airsh
 In 1937, the Hindenburg caught fire while attempting to land in New Jersey. The disaster was witnessed by spectators and recorded by news cameras. Images of the burning airship quickly spread around the world. The tragedy shocked the public and raised concerns about airship safety.
 
 Although investigations continued for years, the disaster severely damaged public confidence in airships. Passenger demand declined rapidly after the incident. Aviation investment increasingly shifted toward airplanes. The Hindenburg disaster became a defining moment in transportation history.`,
-    image: require('../cloudExplAssts/images/TheHindenburgDisaster.png'),
+    image: require('../cloudExplAssts/images/iron-cloud-explorer-the-hindenburg-disaster.png'),
   },
   {
     articleId: 'DeclineOfGiantAirships',
@@ -137,7 +137,7 @@ Although investigations continued for years, the disaster severely damaged publi
 The Hindenburg disaster further accelerated the decline. Public perception shifted as concerns about safety grew stronger. Economic challenges also made large airship operations difficult to maintain. Many companies chose to invest in airplanes instead.
 
 By the 1950s, the era of giant passenger airships had largely come to an end. Most remaining airships served specialized purposes rather than commercial transportation. Despite their decline, their influence on aviation history remained significant. They continue to fascinate historians, engineers, and travelers today.`,
-    image: require('../cloudExplAssts/images/DeclineOfGiantAirships.png'),
+    image: require('../cloudExplAssts/images/iron-cloud-explorer-decline-of-giant-airships.png'),
   },
   {
     articleId: 'ModernAirshipRevival',
@@ -149,6 +149,6 @@ By the 1950s, the era of giant passenger airships had largely come to an end. Mo
 Contemporary airships are being considered for tourism, scientific research, and cargo transportation. Their ability to remain airborne for long periods makes them useful for certain specialized missions. Some designs emphasize low fuel consumption and reduced environmental impact. Others focus on reaching remote locations where traditional transportation is difficult.
 
 The revival of airship development demonstrates the lasting appeal of these remarkable aircraft. While they are unlikely to replace airplanes, they may serve important roles in specific industries. New generations of engineers continue to build upon historic ideas. The story of airships is still being written.`,
-    image: require('../cloudExplAssts/images/ModernAirshipRevival.png'),
+    image: require('../cloudExplAssts/images/iron-cloud-explorer-modern-airship-revival.png'),
   },
 ];

@@ -1,12 +1,29 @@
-import {
-  createNavigationContainerRef,
-  StackActions,
-} from '@react-navigation/native';
+import type {
+  CloudExplMainTabParamList,
+  CloudExplRootStackParamList,
+} from './CloudExplTypes';
 
-import type {CloudExplRootStackParamList} from './CloudExplTypes';
+type CloudExplNavigationHandle = {
+  navigateRootScreen: <RouteName extends keyof CloudExplRootStackParamList>(
+    screen: RouteName,
+    params?: CloudExplRootStackParamList[RouteName],
+  ) => void;
+  replaceRootScreen: <RouteName extends keyof CloudExplRootStackParamList>(
+    screen: RouteName,
+    params?: CloudExplRootStackParamList[RouteName],
+  ) => void;
+  goBack: () => void;
+  resetToMain: () => void;
+  setActiveTab: (tab: keyof CloudExplMainTabParamList) => void;
+};
 
-export const cloudExplNavigationRef =
-  createNavigationContainerRef<CloudExplRootStackParamList>();
+let cloudExplNavigationHandle: CloudExplNavigationHandle | null = null;
+
+export function cloudExplBindNavigation(
+  handle: CloudExplNavigationHandle | null,
+) {
+  cloudExplNavigationHandle = handle;
+}
 
 export function cloudExplNavigateRootScreen<
   RouteName extends keyof CloudExplRootStackParamList,
@@ -14,11 +31,7 @@ export function cloudExplNavigateRootScreen<
   screen: RouteName,
   params?: CloudExplRootStackParamList[RouteName],
 ) {
-  if (!cloudExplNavigationRef.isReady()) {
-    return;
-  }
-
-  cloudExplNavigationRef.navigate(screen as never, params as never);
+  cloudExplNavigationHandle?.navigateRootScreen(screen, params);
 }
 
 export function cloudExplReplaceRootScreen<
@@ -27,22 +40,17 @@ export function cloudExplReplaceRootScreen<
   screen: RouteName,
   params?: CloudExplRootStackParamList[RouteName],
 ) {
-  if (!cloudExplNavigationRef.isReady()) {
-    return;
-  }
+  cloudExplNavigationHandle?.replaceRootScreen(screen, params);
+}
 
-  cloudExplNavigationRef.dispatch(
-    StackActions.replace(screen, params),
-  );
+export function cloudExplGoBack() {
+  cloudExplNavigationHandle?.goBack();
 }
 
 export function cloudExplResetToMain() {
-  if (!cloudExplNavigationRef.isReady()) {
-    return;
-  }
+  cloudExplNavigationHandle?.resetToMain();
+}
 
-  cloudExplNavigationRef.reset({
-    index: 0,
-    routes: [{name: 'Main'}],
-  });
+export function cloudExplNavigateTab(tab: keyof CloudExplMainTabParamList) {
+  cloudExplNavigationHandle?.setActiveTab(tab);
 }

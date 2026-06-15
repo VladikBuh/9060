@@ -10,21 +10,16 @@ import {
   useWindowDimensions,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import {useNavigation} from '@react-navigation/native';
-import type {BottomTabNavigationProp} from '@react-navigation/bottom-tabs';
-import {cloudExplImages} from '../cloudExplAssts';
-import {useCloudExplFavorites} from '../cloudExplCtx/CloudExplFavoritesContext';
-import {useCloudExplArticles} from '../cloudExplCtx/CloudExplArticlesContext';
-import {cloudExplArticles} from '../cloudExplData/CloudExplArticles';
-import {cloudExplNavigateRootScreen} from '../cloudExplNav/CloudExplRootNavigation';
-import type {CloudExplMainTabParamList} from '../cloudExplNav/CloudExplTypes';
-import {cloudExplColors} from '../cloudExplThm/CloudExplTheme';
+import {cloudExplImages} from '../../cloudExplAssts';
+import {useCloudExplFavorites} from '../../cloudExplCtx/CloudExplFavoritesContext';
+import {useCloudExplArticles} from '../../cloudExplCtx/CloudExplArticlesContext';
+import {cloudExplArticles} from '../../cloudExplData/CloudExplArticles';
+import {cloudExplNavigateRootScreen, cloudExplNavigateTab} from '../../cloudExplNav/CloudExplRootNavigation';
+import {cloudExplColors} from '../../cloudExplThm/CloudExplTheme';
 
 const cloudExplTabBarInset = 75;
 
 export function CloudExplFavoritesScreen() {
-  const navigation =
-    useNavigation<BottomTabNavigationProp<CloudExplMainTabParamList>>();
   const {width} = useWindowDimensions();
   const {favoriteIds, toggleFavorite} = useCloudExplFavorites();
   const {isRead} = useCloudExplArticles();
@@ -68,7 +63,7 @@ export function CloudExplFavoritesScreen() {
             </Text>
             <Pressable
               style={styles.cloudExplExploreBtn}
-              onPress={() => navigation.navigate('Articles')}>
+              onPress={() => cloudExplNavigateTab('Articles')}>
               <Text style={styles.cloudExplExploreBtnText}>Explore</Text>
             </Pressable>
           </View>

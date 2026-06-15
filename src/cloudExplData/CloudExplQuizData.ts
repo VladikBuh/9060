@@ -13,11 +13,11 @@ export type CloudExplQuizQuestion = {
 
 const cloudExplArticleImage = (articleId: string) =>
   cloudExplArticles.find(item => item.articleId === articleId)?.image ??
-  require('../cloudExplAssts/images/BirthOfTheAirship.png');
+  require('../cloudExplAssts/images/iron-cloud-explorer-birth-of-the-airship.png');
 
 const cloudExplMapImage = (locationId: string) =>
   cloudExplMapLocations.find(item => item.locationId === locationId)?.image ??
-  require('../cloudExplAssts/images/map.png');
+  require('../cloudExplAssts/images/iron-cloud-explorer-map.png');
 
 const cloudExplQuizQuestion = (
   questionId: string,

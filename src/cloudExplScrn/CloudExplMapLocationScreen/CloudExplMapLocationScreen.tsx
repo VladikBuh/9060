@@ -1,21 +1,22 @@
 import React from 'react';
 import {Pressable, StyleSheet, Text, View} from 'react-native';
-import {RouteProp, useNavigation, useRoute} from '@react-navigation/native';
-import {CloudExplBackgroundLayout} from '../cloudExplCpnnts/CloudExplBackgroundLayout';
-import {CloudExplRootStackParamList} from '../cloudExplNav/CloudExplTypes';
+import {CloudExplBackgroundLayout} from '../../cloudExplCpnnts/CloudExplBackgroundLayout';
+import {
+  useCloudExplNavigation,
+  useCloudExplStackParams,
+} from '../../cloudExplNav/CloudExplNavigationContext';
 
 export function CloudExplMapLocationScreen() {
-  const navigation = useNavigation();
-  const route =
-    useRoute<RouteProp<CloudExplRootStackParamList, 'MapLocation'>>();
+  const {goBack} = useCloudExplNavigation();
+  const {locationId} = useCloudExplStackParams('MapLocation');
 
   return (
     <CloudExplBackgroundLayout>
       <View style={styles.cloudExplRoot}>
-        <Pressable onPress={() => navigation.goBack()} style={styles.cloudExplBack}>
+        <Pressable onPress={() => goBack()} style={styles.cloudExplBack}>
           <Text style={styles.cloudExplBackText}>‹ Back</Text>
         </Pressable>
-        <Text style={styles.cloudExplTitle}>Location {route.params.locationId}</Text>
+        <Text style={styles.cloudExplTitle}>Location {locationId}</Text>
         <Text style={styles.cloudExplBody}>
           Detailed cloud conditions and map pin data will appear here.
         </Text>

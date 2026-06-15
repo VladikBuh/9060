@@ -10,11 +10,11 @@ import {
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {useNavigation} from '@react-navigation/native';
-import {cloudExplImages} from '../cloudExplAssts';
-import {useCloudExplApp} from '../cloudExplCtx/CloudExplAppContext';
-import {cloudExplSaveOnboardingDone} from '../cloudExplStrg/CloudExplAppStorage';
-import {cloudExplColors} from '../cloudExplThm/CloudExplTheme';
+import {useCloudExplNavigation} from '../../cloudExplNav/CloudExplNavigationContext';
+import {cloudExplImages} from '../../cloudExplAssts';
+import {useCloudExplApp} from '../../cloudExplCtx/CloudExplAppContext';
+import {cloudExplSaveOnboardingDone} from '../../cloudExplStrg/CloudExplAppStorage';
+import {cloudExplColors} from '../../cloudExplThm/CloudExplTheme';
 
 type CloudExplOnboardingStep = 'welcome' | 'polar' | 'map' | 'quiz';
 
@@ -65,7 +65,7 @@ const cloudExplOnboardingSteps: Record<
 };
 
 export function CloudExplOnboardingScreen() {
-  const navigation = useNavigation<any>();
+  const {replaceRootScreen} = useCloudExplNavigation();
   const {setOnboardingDone} = useCloudExplApp();
   const insets = useSafeAreaInsets();
   const {width} = useWindowDimensions();
@@ -85,7 +85,7 @@ export function CloudExplOnboardingScreen() {
   const cloudExplOnFinish = async () => {
     setOnboardingDone(true);
     await cloudExplSaveOnboardingDone(true);
-    navigation.replace('Main');
+    replaceRootScreen('Main');
   };
 
   const cloudExplOnNext = () => {

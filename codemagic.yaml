@@ -8,7 +8,7 @@ workflows:
     environment:
       xcode: '26.0'
       ios_signing:
-        distribution_type: app_store
+        distribution_type: app_store_credentials
         bundle_identifier: com.dsfjlnsdf.ironcloudexplorer
       vars:
         BUNDLE_ID: com.dsfjlnsdf.ironcloudexplorer

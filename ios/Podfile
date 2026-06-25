@@ -48,6 +48,7 @@ target 'IronCloudExplorer' do
             needle = "#if FMT_USE_CONSTEVAL\n#  define FMT_CONSTEVAL consteval"
             raise "fmt/base.h structure unexpected; cannot patch FMT_USE_CONSTEVAL" unless text.include?(needle)
             replacement = "#{marker}\n#undef FMT_USE_CONSTEVAL\n#define FMT_USE_CONSTEVAL 0\n#{needle}"
+            File.chmod(0644, fmt_base_h) # base.h ставится read-only (444) — снимаем перед записью
             File.write(fmt_base_h, text.sub(needle, replacement))
             puts "🔧 Patched fmt/base.h to force FMT_USE_CONSTEVAL=0"
           end
